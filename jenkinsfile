@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Code') {
+            steps {
+                git 'https://github.com/<your-username>/ci-cd-ec2-project.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t ec2-app:v1 .'
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                sh '''
+                docker stop ec2-container || true
+                docker rm ec2-container || true
+                docker run -d -p 3000:3000 --name ec2-container ec2-app:v1
+                '''
+            }
+        }
+    }
+}
