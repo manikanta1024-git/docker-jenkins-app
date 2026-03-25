@@ -9,7 +9,7 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git 'https://github.com/manikanta1024-git/docker-jenkins-app.git'
+                git branch: 'main', url: 'https://github.com/manikanta1024-git/docker-jenkins-app.git'
             }
         }
 
